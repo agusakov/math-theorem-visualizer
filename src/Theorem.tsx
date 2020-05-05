@@ -1,21 +1,27 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import firebase from "./firebase";
 import Card from '@material-ui/core/Card';
 
+interface FormProps {
+  fbkey?: string,
+}
 
-class Theorem extends Component {
-    constructor(props) {
+interface FormState {
+  fbKey: string,
+  name: string,
+  statement: string,
+  dependencies?: string
+}
+
+
+class Theorem extends Component<FormProps, FormState> {
+    /*constructor(props: FormProps) {
         super(props);
-        this.state = {
-            fbkey: this.props.theoremId,
-            name: '',
-            statement: '',
-            dependencies: ''
-        }
-      }
+      }*/
 
       componentDidMount() {
-          firebase.database().ref(`Theorems/${this.state.fbkey}`).once('value').then( (snap) => {
+          firebase.database().ref(`Theorems/${this.props.fbkey}`).once('value').then( (snap) => {
           let dependencies = snap.val().dependencies;
           let name = snap.val().name;
           let statement = snap.val().statement;
@@ -26,7 +32,7 @@ class Theorem extends Component {
           });*/
           //console.log(faculty);
           this.setState({
-            data: snap.val(),
+            //data: snap.val(),
             name: name,
             statement: statement,
             dependencies: dependencies
